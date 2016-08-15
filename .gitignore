@@ -92,3 +92,5 @@ ENV/
 
 config.py
 idea/workspace.xml
+app/app.db
+
