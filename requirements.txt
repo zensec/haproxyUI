@@ -3,3 +3,4 @@ flask-sqlalchemy
 flask-migrate
 flask-admin
 flask-script
+flask-login

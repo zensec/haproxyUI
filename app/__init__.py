@@ -2,11 +2,15 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Server, Manager
 from flask_migrate import Migrate, MigrateCommand
+import flask_login
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
-
 app.config.from_object('config.BaseConfig')
+
+db = SQLAlchemy(app)
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+
 
 migrate = Migrate(app, db)
 manager = Manager(app)
