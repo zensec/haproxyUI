@@ -1,15 +1,19 @@
 from flask import render_template, request, flash, redirect, url_for, session
 from app.models.user import User
-from flask_classful import FlaskView
+from flask_classful import FlaskView, route
 from datetime import datetime
 from app import app, db
 
 
-class Login(FlaskView):
-    def index(self):
-        return render_template('login/index.html')
+class Auth(FlaskView):
+    route_base = ''
 
-    def post(self):
+    @route('/login')
+    def index(self):
+        return render_template('auth/login.html')
+
+    @route('/login', methods=['POST'])
+    def login(self):
         if 'user_id' in session:
             del session['user_id']
 
@@ -18,16 +22,22 @@ class Login(FlaskView):
 
         user = User.query.filter_by(username=username).first()
         if not user:
-            flash('Invalid username1 or password', 'error')
-            return redirect(url_for('Login:index'))
+            flash('Invalid username or password', 'error')
+            return redirect(url_for('Auth:index'))
 
         if not user.validate_password(password):
-            flash('Invalid username or password!', 'error')
-            return redirect(url_for('Login:index'))
+            flash('Invalid username or password', 'error')
+            return redirect(url_for('Auth:index'))
 
         app.logger.debug('Storing user ID {0} into session'.format(user.id))
         session['user_id'] = user.id
         user.last_seen = datetime.utcnow()
         db.session.commit()
 
-        return redirect(url_for('Clusters:index'))
+        return redirect(url_for('Dashboard:index'))
+
+    @route('/logout')
+    def logout(self):
+        if 'user_id' in session:
+            del session['user_id']
+        return redirect(url_for('Auth:index'))

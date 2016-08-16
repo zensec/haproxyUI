@@ -9,8 +9,11 @@ class Cluster(Audit):
     name = db.Column(db.String(100))
     is_active = db.Column(db.Boolean, default=False)
 
+    servers = db.relationship('Server', backref='cluster', lazy='dynamic')
+    domains = db.relationship('Domain', backref='cluster', lazy='dynamic')
+
     def to_dict(self):
         return parse_to_dict(self)
 
     def __repr__(self):
-        return '<Cluster {0}>'.format(self.username)
+        return '<Cluster {0}>'.format(self.name)

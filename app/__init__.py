@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_script import Server, Manager
+from flask_modus import Modus
 from app.helpers import PyCrypto247
 from flask_migrate import Migrate, MigrateCommand
 from urllib.parse import unquote
@@ -11,6 +12,7 @@ app.config.from_object('config.BaseConfig')
 db = SQLAlchemy(app)
 enc = PyCrypto247(app.config['PASSWORD_ENCRYPTION_KEY'])
 
+modus = Modus(app)
 migrate = Migrate(app, db)
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)

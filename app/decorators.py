@@ -28,7 +28,7 @@ def login_required(f):
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
             app.logger.debug('No user session found, Redirecting to login')
-            return redirect(url_for('Login:index'))
+            return redirect(url_for('Auth:login'))
         user_id = session['user_id']
         app.logger.debug('Retrieved {0} from session'.format(user_id))
         user = User.query.get(user_id)
@@ -36,11 +36,11 @@ def login_required(f):
         if user.last_seen < datetime.utcnow() - timedelta(minutes=15):
             app.logger.debug('User session older than 15 minutes ago, Redirecting to login')
             del session['user_id']
-            return redirect(url_for('Login:index'))
+            return redirect(url_for('Auth:login'))
         if not user.is_active:
             app.logger.debug('User not active, Redirecting ot login')
             del session['user_id']
-            return redirect(url_for('Login:index'))
+            return redirect(url_for('Auth:login'))
         app.logger.debug('User authenticated successfully, Allowing through')
 
         # Update our last seen & add to our globals

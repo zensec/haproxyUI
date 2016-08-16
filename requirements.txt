@@ -4,3 +4,5 @@ flask-migrate
 flask-admin
 flask-script
 flask-login
+flask-modus
+flask-wtf

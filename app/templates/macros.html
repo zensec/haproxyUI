@@ -1,0 +1,19 @@
+{% macro render_field(field, label_visible=true, title='Please choose an option') -%}
+    <div class="form-group {% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
+        {% if field.type != 'HiddenField' %}<label for="{{ field.id }}">{{ field.label.text }}</label>{% endif %}
+        {% if field.type == 'SelectField' %}
+            {% if title %}
+                {{ field(class_='form-control selectpicker', **{'data-live-search': 'true', 'title': title}) }}
+            {% else %}
+                {{ field(class_='form-control selectpicker', **{'data-live-search': 'true'}) }}
+            {% endif %}
+        {% else %}
+            {{ field(class_='form-control', **kwargs) }}
+        {% endif %}
+        {% if field.errors %}
+            {% for e in field.errors %}
+                <p class="help-block">{{ e }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+{%- endmacro %}
