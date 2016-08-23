@@ -1,6 +1,7 @@
+from werkzeug.security import generate_password_hash, check_password_hash
 from .base import Audit
 from app.helpers import parse_to_dict
-from app import db, enc
+from app import db
 
 
 class User(Audit):
@@ -18,10 +19,10 @@ class User(Audit):
         return resp
 
     def encrypt_password(self, password):
-        self.hash = enc.encrypt(password)
+        self.hash = generate_password_hash(password)
 
     def validate_password(self, password):
-        if password == enc.decrypt(self.hash):
+        if check_password_hash(self.hash, password):
             return True
         return False
 
