@@ -10,15 +10,14 @@ class Clusters(BaseView):
         return render_template('clusters/index.html', page_heading='Clusters', page_title='Clusters', clusters=clusters)
 
     def new(self):
-        form = ClusterForm()
-        return render_template('clusters/new.html', page_heading='New Cluster', page_title='New Cluster', form=form)
-
+        return self._new_cluster_return()
+    
     def post(self):
         form = ClusterForm()
         cluster = Cluster.query.filter_by(audit_is_deleted=False, name=form.name.data).first()
         if cluster:
             flash('Cluster name already in use', 'error')
-            return render_template('clusters/new.html', page_heading='New Cluster', page_title='New Cluster', form=form)
+            return self._new_cluster_return()
         cluster = Cluster(name=form.name.data, is_active=True)
         cluster.create()
 
@@ -38,3 +37,7 @@ class Clusters(BaseView):
         cluster.delete()
         flash('Cluster and all associated servers deleted successfully', 'success')
         return redirect(url_for('Clusters:index'))
+
+    def _new_cluster_return(self):
+        form = ClusterForm()
+        return render_template('clusters/new.html', page_heading='New Cluster', page_title='New Cluster', form=form)
