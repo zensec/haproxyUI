@@ -1,5 +1,6 @@
 import datetime
 from Crypto.Cipher import AES
+from flask import request, g
 from Crypto import Random
 import binascii
 
@@ -42,3 +43,12 @@ class PyCrypto247:
         enc = enc[16:]
         cipher = AES.new(self.key, AES.MODE_CBC, iv)
         return self.un_pad(cipher.decrypt(enc)).decode('utf-8')
+
+
+def log(item_id=None):
+    from app.models.log import Log
+
+    l = Log(user_id=g.user.id, action=request.url_rule)
+    if item_id:
+        l.item_id = item_id
+    l.create()

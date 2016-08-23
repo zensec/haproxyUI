@@ -1,5 +1,6 @@
-from flask import render_template, request, flash, redirect, url_for, session
+from flask import render_template, request, flash, redirect, url_for, session, g
 from app.models.user import User
+from app.helpers import log
 from flask_classful import FlaskView, route
 from datetime import datetime
 from app import app, db
@@ -34,10 +35,13 @@ class Auth(FlaskView):
         user.last_seen = datetime.utcnow()
         db.session.commit()
 
+        log()
         return redirect(url_for('Dashboard:index'))
 
     @route('/logout')
     def logout(self):
         if 'user_id' in session:
             del session['user_id']
+
+        log()
         return redirect(url_for('Auth:index'))
