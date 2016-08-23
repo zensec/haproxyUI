@@ -33,6 +33,7 @@ def list_routes():
 
 @manager.command
 def create_user(username=None, password=None):
+    from werkzeug.security import generate_password_hash
     """Creates a new user in the database"""
     if not username or not password:
         return 'Please specify username & password'
@@ -40,7 +41,7 @@ def create_user(username=None, password=None):
     user = User.query.filter_by(username=username).first()
     if user:
         return 'Username already in use'
-    user = User(username=username, name=username, is_active=True, hash=enc.encrypt(password))
+    user = User(username=username, name=username, is_active=True, hash=generate_password_hash(password))
     db.session.add(user)
     db.session.commit()
 
