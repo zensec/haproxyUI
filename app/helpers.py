@@ -48,7 +48,7 @@ class PyCrypto247:
 def log(item_id=None):
     from app.models.log import Log
 
-    l = Log(user_id=g.user.id, action=request.url_rule)
+    l = Log(user_id=g.user.id, action='{0}'.format(request.endpoint))
     if item_id:
         l.item_id = item_id
     l.create()
