@@ -24,7 +24,11 @@
                                 {% for domain in domains %}
                                     <tr>
                                         <td>{{ domain.id }}</td>
-                                        <td>{{ domain.name }}</td>
+                                        <td>
+                                            <a href="{{ url_for('Domains:get', domain_name=domain.name) }}">
+                                                {{ domain.name }}
+                                            </a>
+                                        </td>
                                         <td>
                                             {% if domain.is_active %}
                                                 <i class='fa fa-fw fa-check text-success'></i>
@@ -34,7 +38,7 @@
                                         </td>
                                         <td>{{ domain.cluster.name }}</td>
                                         <td class="options">
-                                            <a href="{{ url_for('Domains:delete', domain_id=domain.id) }}?_method=delete" class="btn btn-xs btn-danger">Delete</a>
+                                            <a href="{{ url_for('Domains:delete', domain_name=domain.name) }}?_method=delete" class="btn btn-xs btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
