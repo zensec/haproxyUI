@@ -33,8 +33,8 @@ def list_routes():
 
 @manager.command
 def create_user(username=None, password=None):
-    from werkzeug.security import generate_password_hash
     """Creates a new user in the database"""
+    from werkzeug.security import generate_password_hash
     if not username or not password:
         return 'Please specify username & password'
     from app.models.user import User
