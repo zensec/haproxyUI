@@ -9,7 +9,7 @@ class Upstream(Audit):
     domain_id = db.Column(db.Integer, db.ForeignKey('domains.id'))
     ip_address = db.Column(db.String(100))
     port = db.Column(db.Integer)
-    
+
     def __repr__(self):
         return 'Upstream {0} for domain {1]>'.format(self.ip_address, self.domain.name)
 
