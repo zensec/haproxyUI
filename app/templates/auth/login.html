@@ -18,37 +18,38 @@
                     <div class="modal-body">
 
                         <div id='alerts'>
-                        <!-- Error Handling -->
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                            {% if messages %}
-                                {% for category, message in messages %}
-                                    {% if category[-8:] == '-noclose' %}
-                                        {% set this_no_close = True %}
-                                        {% set category = category[:-8] %}
-                                    {% endif %}
-                                    {% if category == 'success' %}
-                                        {% set this_desc = 'Success' %}
-                                        {% set this_icon = 'ok' %}
-                                        {% set this_class = 'success' %}
-                                    {% elif category == 'danger' or category == 'error' %}
-                                        {% set this_desc = 'Error' %}
-                                        {% set this_icon = 'remove' %}
-                                        {% set this_class = 'danger' %}
-                                    {% endif %}
+                            <!-- Error Handling -->
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                    {% for category, message in messages %}
+                                        {% if category[-8:] == '-noclose' %}
+                                            {% set this_no_close = True %}
+                                            {% set category = category[:-8] %}
+                                        {% endif %}
+                                        {% if category == 'success' %}
+                                            {% set this_desc = 'Success' %}
+                                            {% set this_icon = 'ok' %}
+                                            {% set this_class = 'success' %}
+                                        {% elif category == 'danger' or category == 'error' %}
+                                            {% set this_desc = 'Error' %}
+                                            {% set this_icon = 'remove' %}
+                                            {% set this_class = 'danger' %}
+                                        {% endif %}
 
-                                    <div class="alert alert-{{ this_class }}" role="alert">
-                                        {% if this_no_close != True %}
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        {%  endif %}
-                                        <span class="glyphicon glyphicon-{{ this_icon }}" aria-hidden="true"></span>
-                                        <span class="sr-only">{{ this_desc }}:</span>
-                                        {{ message }}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        {% endwith %}
+                                        <div class="alert alert-{{ this_class }}" role="alert">
+                                            {% if this_no_close != True %}
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            {%  endif %}
+                                            <span class="glyphicon glyphicon-{{ this_icon }}" aria-hidden="true"></span>
+                                            <span class="sr-only">{{ this_desc }}:</span>
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
 
                         <form class="form col-md-12 center-block" action="{{ url_for('Auth:login') }}" method="post">
                             <div class="form-group">
