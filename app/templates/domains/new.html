@@ -8,12 +8,12 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" method="post" action="{{ url_for('Servers:post', cluster_id=cluster.id) }}">
+                            <form role="form" method="post" action="{{ url_for('Domains:post') }}">
+                                {{ render_field(form.cluster_id) }}
                                 {{ render_field(form.name) }}
 
-                                {{ render_field(form.ip_address) }}
                                 <input type="submit" class="btn btn-success" value="Create"/>
-                                <a href="{{ url_for('Clusters:index') }}" class="btn btn-default">Cancel</a>
+                                <a href="{{ url_for('Domains:index') }}" class="btn btn-default">Cancel</a>
                             </form>
                         </div>
                     </div>

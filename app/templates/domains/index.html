@@ -12,31 +12,29 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Active?</th>
-                                    <th>Domain Count</th>
+                                    <th>Cluster</th>
                                     <th class="options">
-                                        <a href="{{ url_for('Servers:new', cluster_id=cluster.id) }}" class="btn btn-xs btn-primary">
+                                        <a href="{{ url_for('Domains:new') }}" class="btn btn-xs btn-primary">
                                             <i class="fa fa-plus"></i> Create
                                         </a>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for server in servers %}
+                                {% for domain in domains %}
                                     <tr>
-                                        <td>{{ server.id }}</td>
-                                        <td>{{ server.name }}</td>
+                                        <td>{{ domain.id }}</td>
+                                        <td>{{ domain.name }}</td>
                                         <td>
-                                            {% if server.is_active %}
+                                            {% if domain.is_active %}
                                                 <i class='fa fa-fw fa-check text-success'></i>
                                             {% else %}
                                                 <i class='fa fa-fw fa-times text-danger'></i>
                                             {% endif %}
                                         </td>
-                                        <td>
-                                            {{ server.cluster.domains.filter_by(audit_is_deleted=False, is_active=True).count() }}
-                                        </td>
+                                        <td>{{ domain.cluster.name }}</td>
                                         <td class="options">
-                                            <a href="{{ url_for('Servers:delete', cluster_id=server.cluster.id, server_id=server.id) }}?_method=delete" class="btn btn-xs btn-danger">Delete</a>
+                                            <a href="{{ url_for('Domains:delete', domain_id=domain.id) }}?_method=delete" class="btn btn-xs btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
