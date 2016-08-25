@@ -25,7 +25,11 @@
                                 {% for cluster in clusters %}
                                     <tr>
                                         <td>{{ cluster.id }}</td>
-                                        <td>{{ cluster.name }}</td>
+                                        <td>
+                                            <a href="{{ url_for('Servers:index', cluster_id=cluster.id) }}">
+                                                {{ cluster.name }}
+                                            </a>
+                                        </td>
                                         <td>
                                             {% if cluster.is_active %}
                                                 <i class='fa fa-fw fa-check text-success'></i>
