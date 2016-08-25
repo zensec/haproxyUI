@@ -10,6 +10,8 @@ class Domain(Audit):
     is_active = db.Column(db.Boolean, default=True)
     cluster_id = db.Column(db.Integer, db.ForeignKey('clusters.id'))
 
+    upstreams = db.relationship('Upstream', backref='domain', lazy='dynamic')
+
     def __repr__(self):
         return '<Domain {0}>'.format(self.name)
 
