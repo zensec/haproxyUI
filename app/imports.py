@@ -14,6 +14,9 @@ def register_blueprints(flask_app):
     from app.views.domains import Domains
     Domains.register(flask_app)
 
+    from app.views.upstreams import Upstreams
+    Upstreams.register(flask_app)
+
     from app.models.server import Server
     from app.models.domain import Domain
     from app.models.log import Log
