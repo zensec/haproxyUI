@@ -34,6 +34,7 @@ class Auth(FlaskView):
         session['user_id'] = user.id
         user.last_seen = datetime.utcnow()
         db.session.commit()
+        g.user = user
 
         log()
         return redirect(url_for('Dashboard:index'))
