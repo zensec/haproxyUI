@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Active?</th>
+                                    <th>Domain Count</th>
+                                    <th class="options">
+                                        <a href="{{ url_for('Servers:new', cluster_id=cluster.id) }}" class="btn btn-xs btn-primary">
+                                            <i class="fa fa-plus"></i> Create
+                                        </a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for server in servers %}
+                                    <tr>
+                                        <td>{{ server.id }}</td>
+                                        <td>{{ server.name }}</td>
+                                        <td>
+                                            {% if server.is_active %}
+                                                <i class='fa fa-fw fa-check text-success'></i>
+                                            {% else %}
+                                                <i class='fa fa-fw fa-times text-danger'></i>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {{ server.cluster.domains.filter_by(audit_is_deleted=False, is_active=True).count() }}
+                                        </td>
+                                        <td class="options">
+                                            <a href="{{ url_for('Servers:delete', cluster_id=server.cluster.id, server_id=server.id) }}?_method=delete" class="btn btn-xs btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

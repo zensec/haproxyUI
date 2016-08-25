@@ -7,6 +7,8 @@ from .base import BaseView
 
 
 class Servers(BaseView):
+    route_base = '/clusters/<cluster_id>/servers'
+
     def index(self, cluster_id):
         cluster = Cluster.query.filter_by(audit_is_deleted=False, id=cluster_id).first()
         if not cluster:
@@ -15,7 +17,8 @@ class Servers(BaseView):
         servers = cluster.servers.filter_by(audit_is_deleted=False).all()
 
         log()
-        return render_template('servers/index.html', page_heading='Servers', page_title='Servers', servers=servers)
+        return render_template('servers/index.html', page_heading='Servers',
+                               page_title='Servers', servers=servers, cluster=cluster)
 
     def new(self, cluster_id):
         cluster = Cluster.query.filter_by(audit_is_deleted=False, id=cluster_id).first()
@@ -39,7 +42,7 @@ class Servers(BaseView):
 
         log(server.id)
         flash('Server created successfully', 'success')
-        return redirect(url_for('Servers:index'))
+        return redirect(url_for('Clusters:index'))
 
     def delete(self, cluster_id, server_id):
         cluster = Cluster.query.filter_by(audit_is_deleted=False, id=cluster_id).first()
@@ -65,4 +68,5 @@ class Servers(BaseView):
     def _new_server_return(self, cluster):
         form = ServerForm()
         log()
-        return render_template('servers/new.html', page_heading='New Server', page_title='New Server', form=form, cluster=cluster)
+        return render_template('servers/new.html', page_heading='New Server',
+                               page_title='New Server', form=form, cluster=cluster)
