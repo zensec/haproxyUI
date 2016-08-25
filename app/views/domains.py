@@ -15,8 +15,8 @@ class Domains(BaseView):
         return render_template('domains/index.html', page_tite='All Domains', page_heading='All Domains',
                                domains=domains, form=form)
 
-    def get(self, domain_id):
-        domain = self._get_domain(domain_id=domain_id)
+    def get(self, domain_name):
+        domain = self._get_domain(domain_name=domain_name)
         if not domain:
             flash('Domain not found', 'error')
             return redirect(url_for('Domains:index'))
@@ -47,8 +47,8 @@ class Domains(BaseView):
         flash('Domain created successfully', 'success')
         return redirect(url_for('Domains:index'))
 
-    def delete(self, domain_id):
-        domain = self._get_domain(domain_id=domain_id)
+    def delete(self, domain_name):
+        domain = self._get_domain(domain_name=domain_name)
         if not domain:
             flash('Domain not found', 'error')
             return redirect(url_for('Domains:index'))
