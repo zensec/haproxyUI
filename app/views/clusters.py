@@ -1,7 +1,7 @@
 from app.models.cluster import Cluster
 from app.forms.cluster import ClusterForm
 from app.helpers import log
-from flask import render_template, flash, redirect, url_for, g
+from flask import render_template, flash, redirect, url_for
 from .base import BaseView
 
 
