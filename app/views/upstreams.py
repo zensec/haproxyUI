@@ -54,4 +54,4 @@ class Upstreams(BaseView):
         form = UpstreamForm()
         log()
         return render_template('upstreams/new.html', page_heading='New upstream for domain {0}'.format(domain.name),
-                               page_title='New upstream for domain {0}'.format(domain.name), form=form)
+                               page_title='New upstream for domain {0}'.format(domain.name), form=form, domain=domain)
