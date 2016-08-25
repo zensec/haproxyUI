@@ -8,12 +8,12 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-6">
-                            <form role="form" method="post" action="{{ url_for('Domains:post') }}">
-                                {{ render_field(form.cluster_id) }}
-                                {{ render_field(form.name) }}
+                            <form role="form" method="post" action="{{ url_for('Upstreams:post', domain_name=domain.name) }}">
+                                {{ render_field(form.ip_address) }}
+                                {{ render_field(form.port) }}
 
                                 <input type="submit" class="btn btn-success" value="Create"/>
-                                <a href="{{ url_for('Domains:index') }}" class="btn btn-default">Cancel</a>
+                                <a href="{{ url_for('Domains:get', domain_name=domain.name) }}" class="btn btn-default">Cancel</a>
                             </form>
                         </div>
                     </div>
