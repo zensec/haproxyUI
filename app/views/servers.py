@@ -54,16 +54,16 @@ class Servers(BaseView):
         if not server:
             flash('Server not found', 'error')
             return redirect(url_for('Servers:index'))
-        if server.domains.filter_by(audit_is_deleted=False).count() > 0:
+        if server.cluster.domains.filter_by(audit_is_deleted=False).count() > 0:
             flash('Active domains in this server, Cannot delete', 'error')
-            return redirect(url_for('Servers:index'))
+            return redirect(url_for('Servers:index', cluster_id=cluster.id))
         for server in server.servers.filter_by(audit_is_deleted=False).all():
             server.delete()
         server.delete()
 
         log(server.id)
         flash('Server deleted successfully', 'success')
-        return redirect(url_for('Servers:index'))
+        return redirect(url_for('Servers:index', cluster_id=cluster.id))
 
     def _new_server_return(self, cluster):
         form = ServerForm()
